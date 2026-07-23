@@ -1,0 +1,8 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# data too large
+data/glodap_500-2000m.geojson
+data/glodap_500-2000m.rds
