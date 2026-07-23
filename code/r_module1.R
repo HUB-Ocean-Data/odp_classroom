@@ -1,7 +1,7 @@
 rm(list = ls())
 
-install.packages("package")
-library(package)
+# install.packages("package")
+# library(package)
 
 install.packages("ggplot2")
 library(ggplot2)
