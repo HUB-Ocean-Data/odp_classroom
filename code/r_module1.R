@@ -50,10 +50,13 @@ client$dataset(data_uuid)$table$schema()$names
 client$dataset(data_uuid)$table$schema()$names[11]
 client$dataset(data_uuid)$table$stats()$columns[[11]]
 
-# ingest from ODP
+# ingest from ODP to R
+# data <- client$dataset(data_uuid)$table$select()$all_dataframe(max_rows = 10000000000000000000,
+#                                                                max_time = 10000000000000000000)
+
 data <- client$dataset(data_uuid)$table$select(filter = "G2bottomdepth >= ? AND G2bottomdepth <= ?",
-                                               vars = list(500, 2000))$all_dataframe(max_rows = 1000000000000000000,
-                                                                                     max_time = 1000000000000000000)
+                                               vars = list(500, 2000))$all_dataframe(max_rows = 10000000000000000000,
+                                                                                     max_time = 10000000000000000000)
 
 # inspect data structure
 dplyr::glimpse(data)
@@ -61,19 +64,24 @@ dim(data)
 names(data)
 class(data)
 
-# convert data to sf
+# convert to sf
 data_sf <- data %>%
   sf::st_as_sf(x = .,
                wkt = "geometry",
                crs = 4326) %>%
   janitor::clean_names()
+names(data_sf)
+class(data_sf)
 
+# mapping interactively
 mapview::mapview(data_sf,
                  zcol = "g2bottomdepth",
                  layer.name = "Depth (m)")
 
-# country / global
-world <- rnaturalearth::ne_countries(scale = "large", type = "countries", returnclass = "sf")
+# global data
+world <- rnaturalearth::ne_countries(scale = "large",
+                                     type = "countries",
+                                     returnclass = "sf")
 europe <- rnaturalearth::ne_countries(scale = "large",
                                       type = "countries",
                                       continent = "Europe",
@@ -100,14 +108,19 @@ p <- ggplot2::ggplot() +
                                  
                                  # NA values
                                  na.value = "grey70",
+                                 
+                                 # limits
                                  limits = c(500, 2000),
+                                 
                                  # legend breaks
                                  breaks = seq(from = 500,
                                               to = 2000,
                                               by = 250),
+                                 
                                  # legend labels
                                  labels = c("500", "750", "1000", "1250", "1500", "1750", "2000")) +
   
+  # guides
   guides(color = guide_colourbar(title.position = "top",
                                  ticks.colour = "black",
                                  frame.colour = "black",
@@ -133,7 +146,7 @@ p <- ggplot2::ggplot() +
         # legend
         legend.text = element_text(size = 6),
         legend.title = element_text(size = 8),
-        legend.position = c(0.5, -0.2),
+        legend.position = "bottom",
         legend.key.size = unit(0.4, "cm"),
         legend.key.width = unit(2, "cm"),
         legend.direction = "horizontal",
@@ -144,10 +157,12 @@ p <- ggplot2::ggplot() +
         plot.margin=grid::unit(c(0,0,0,0), "mm"))
 p
 
-# load protected seas data
+# load protected areas
 pa <- client$dataset("a608f54b-75c7-4df9-a3a8-cedbfa391873")$table$select(filter = "category_name = 'Marine Protected Area' AND iucn_category = 'Ia'")$all_dataframe() %>%
-  dplyr::mutate(geometry = sf::st_as_sfc(structure(as.list(geometry), class = "WKB"))) %>%
-  # set CRS = WGS84
+  # fix geometries
+  dplyr::mutate(geometry = sf::st_as_sfc(structure(as.list(geometry),
+                                                   class = "WKB"))) %>%
+  # set CRS as WGS84 (EPSG:4326)
   sf::st_as_sf(crs = 4326) %>%
   # make geometries valid
   sf::st_make_valid()
@@ -157,19 +172,20 @@ greenland <- rnaturalearth::ne_countries(scale = "large",
                                          continent = "North America",
                                          returnclass = "sf") %>%
   dplyr::filter(admin == "Greenland")
-
-class(pa)
+names(greenland)
+dplyr::glimpse(greenland)
 
 # interactive plot
 mapview::mapview(data_sf,
                  zcol = "g2bottomdepth",
                  layer.name = "Depth (m)") +
-  mapview::mapview(x = pa,
+  mapview::mapview(pa,
                    # color as green
                    col.regions = "green4")
 
 # static map of GLODAP (500 - 2000m) + protected areas
-p2 <- ggplot2::ggplot() +
+p2 <- ggplot2::ggplot() + 
+  
   # GLODAP
   ggplot2::geom_sf(data = data_sf,
                    aes(color = g2bottomdepth),
@@ -177,9 +193,9 @@ p2 <- ggplot2::ggplot() +
   
   # Europe
   ggplot2::geom_sf(data = europe,
-                   fill = "grey90",
-                   color = "black",
-                   alpha = 0.5) +
+                  fill = "grey90",
+                  color = "black",
+                  alpha = 0.5) +
   
   # Greenland
   ggplot2::geom_sf(data = greenland,
@@ -187,18 +203,18 @@ p2 <- ggplot2::ggplot() +
                    color = "black",
                    alpha = 0.5) +
   
-  # protected areas -- map as linetype
+  # protected areas
   ggplot2::geom_sf(data = pa,
-                   aes(linetype = "Protected areas"),
+                   aes(linetype = "Protected Areas"),
                    color = "green4",
                    fill = NA,
                    lwd = 0.2,
-                   alpha = 0.2) +
+                   alpha = 0.4) +
   
   # x-axis limit
   ggplot2::xlim(-30, 30) +
   # y-axis limit
-  ggplot2::ylim(60, 85) +
+  ggplot2::ylim(60, 85) + 
   
   # legend
   ggplot2::scale_color_gradientn(name = "Depth (m)",
@@ -208,17 +224,21 @@ p2 <- ggplot2::ggplot() +
                                  
                                  # NA values
                                  na.value = "grey70",
+                                 
+                                 # limits
                                  limits = c(500, 2000),
+                                 
                                  # legend breaks
                                  breaks = seq(from = 500,
                                               to = 2000,
                                               by = 250),
+                                 
                                  # legend labels
                                  labels = c("500", "750", "1000", "1250", "1500", "1750", "2000")) +
   
-  ## protected areas
   ggplot2::scale_linetype_manual(name = "",
-                                 values = c("Protected areas" = "dashed")) +
+                                 values = c("Protected Areas" = "dashed")) +
+  
   
   guides(color = guide_colourbar(title.position = "top",
                                  ticks.colour = "black",
@@ -259,8 +279,9 @@ p2 <- ggplot2::ggplot() +
         plot.margin = grid::unit(c(0, 0, 0, 0), "mm"))
 p2
 
-# create output directories
-fs::dir_create(c("code", "data", "figures"))
+# create output directories (data, code, figures)
+fs::dir_create("code")
+fs::dir_create(c("data", "figures"))
 
 # export figures
 ggplot2::ggsave(plot = p,
@@ -295,7 +316,7 @@ sfarrow::st_write_parquet(obj = data_sf,
 
 ## RDS file
 readr::write_rds(x = data_sf,
-             file = file.path("data", "glodap_500-2000m.rds"))
+                 file = file.path("data", "glodap_500-2000m.rds"))
 
 # export to ODP
 data_odp <- data_sf %>%
