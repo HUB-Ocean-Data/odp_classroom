@@ -6,3 +6,6 @@
 # data too large
 data/glodap_500-2000m.geojson
 data/glodap_500-2000m.rds
+
+# videos
+videos/module1/r_module1_segment11.mov
