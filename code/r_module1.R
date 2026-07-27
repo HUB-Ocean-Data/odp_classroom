@@ -340,5 +340,8 @@ schema <- arrow::schema(
 
 schema
 
+# drop existing tables to populate with new one
+odp_table$drop()
+
 # send data to table to repopulated on ODP
 odp_table$create(data_odp)
