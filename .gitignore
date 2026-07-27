@@ -4,6 +4,7 @@
 .Ruserdata
 
 .DS_Store
+videos/.DS_Store
 
 # data too large
 data/glodap_500-2000m.geojson
