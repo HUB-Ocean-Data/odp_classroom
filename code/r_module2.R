@@ -397,7 +397,7 @@ reef_points_odp <- reef_points %>%
                 geometry = sf::st_as_text(geometry)) %>%
   # run it to the ODP function
   odp_function(odp_ready_data = .,
-               uuid = "8088dc37-9ca0-4da1-b99e-1263d258cc29")
+               uuid = "4689ff6a-3689-498b-86c7-c7c93f112de9")
 
 ### GRID polygons (Dawson et al. 2025) 
 reef_polygons_odp <- reef_polygons %>%
@@ -405,7 +405,7 @@ reef_polygons_odp <- reef_polygons %>%
   dplyr::mutate(geometry = sf::st_as_text(geometry)) %>%
   # run it to the ODP function
   odp_function(odp_ready_data = .,
-               uuid = "6a855c12-7554-4ea7-abf8-4762ef688fdb")
+               uuid = "553c9c0f-82e1-43b2-b93a-8d1a5a18cdc4")
 
 ### Mauritius coral data
 coral_odp <- coral %>%
@@ -415,17 +415,17 @@ coral_odp <- coral %>%
   sf::st_drop_geometry() %>%
   # run it to the ODP function
   odp_function(odp_ready_data = .,
-               uuid = "0733207f-8937-4326-b6a6-50e60745b943")
+               uuid = "1dffbd89-8659-454c-bae4-651fd2f32422")
 
 ### created data in Gustav's polygon
 odp_gustav_coral <- odp_function(odp_ready_data = gustav_coral_odp,
-                                 uuid = "d323dea7-2a4b-4722-bc69-4a32f7fa948d")
+                                 uuid = "f9c2c585-4218-47ac-9b20-c73f23ace29d")
 
 ############################
 ############################
 
 # make data as a table for aggregation
-agg_table <- client$dataset("d323dea7-2a4b-4722-bc69-4a32f7fa948d")$table
+agg_table <- client$dataset("f9c2c585-4218-47ac-9b20-c73f23ace29d")$table
 
 # aggregate based on a H3 level (only works for ODP hosted data)
 agg <- agg_table$aggregate(
@@ -442,7 +442,7 @@ names(agg)
 # get H3 indexes
 h3_indexes <- as.character(agg$group)
 
-# create a sf (simple feature) of the 
+# create a sf (simple feature) of the data
 h3_sf <- h3_indexes %>%
   h3::h3_to_geo_boundary_sf() %>%
   sf::st_as_sf() %>%
