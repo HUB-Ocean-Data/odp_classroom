@@ -72,7 +72,7 @@ Additional data for the region were hosted on Pangaea by [Dawson et al. (2025)](
 
 *R Packages*
 * [sf](https://r-spatial.github.io/sf/) -- powerful geospatial functions ([cheatsheet](https://rstudio.github.io/cheatsheets/sf.pdf))
-* [tidyverse](https://tidyverse.org/packages/) -- suite of packages, including [dplyr](https://dplyr.tidyverse.org) ([cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf)), [ggplot2](https://ggplot2.tidyverse.org) ([cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf)), [readr](https://readr.tidyverse.org) ([cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf)), [stringr](https://stringr.tidyverse.org) ([cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf)), 
+* [tidyverse](https://tidyverse.org/packages/) -- suite of packages, including [dplyr](https://dplyr.tidyverse.org) ([cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf)), [ggplot2](https://ggplot2.tidyverse.org) ([cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf)), [readr](https://readr.tidyverse.org) ([cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf)), [stringr](https://stringr.tidyverse.org) ([cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf))
 * [mapview](https://r-spatial.github.io/mapview/index.html)-- interactive mapping
 * [h3](https://crazycapivara.github.io/h3-r/index.html) -- ability to create and use H3 grids
 * [rnaturalearth](https://docs.ropensci.org/rnaturalearth/articles/rnaturalearth.html) -- pull data from [Natural Earth](https://www.naturalearthdata.com), a collated standardized data catalogue 
