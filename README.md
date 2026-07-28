@@ -35,7 +35,7 @@ to visualize marine protected areas and their [IUCN protection categories](https
   - Section 11: Export data
   - Section 12: Export to ODP
   
-View module 1 video [here](https://github.com/HUB-Ocean-Data/odp_classroom/blob/main/videos/module1/r_module1.mov)
+
 
 **Module 2:** Building upon Module 1, this module will let you interact with pulling and exporting data to ODP. Additionally,
 you will start to use geospatial packages (sf and rmapshaper) to conduct data manipulations for visualizing coral reef data in
@@ -62,6 +62,11 @@ Additional data for the region were hosted on Pangaea by [Dawson et al. (2025)](
   - Section 11: Aggregate on H3 hexagons
 
 **Further Resources**
+
+*Videos*
+* View module 1 video [here](https://github.com/HUB-Ocean-Data/odp_classroom/blob/main/videos/module1/r_module1.mov) (13:43 minutes)
+* View module 2 video [here](https://github.com/HUB-Ocean-Data/odp_classroom/tree/main/videos/module2)
+* Module 1 segment videos are within the [Module 1 videos sub-directory](https://github.com/HUB-Ocean-Data/odp_classroom/tree/main/videos/module1). All of the videos are there except for segment 11
 
 *Ocean Data Platform*
 * [ODP R SDK GitHub](https://github.com/C4IROcean/odp-sdkr)
