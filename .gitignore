@@ -11,5 +11,6 @@ data/glodap_500-2000m.rds
 
 # videos
 videos/.DS_Store
+videos/module1/r_module1_segment12 -- output directories
+videos/module1/r_module1_segment13 -- export figures.mov
 videos/module1/r_module1_segment11.mov
-videos/module2/r_module2.mov
