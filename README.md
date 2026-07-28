@@ -40,7 +40,16 @@ View module 1 video [here](https://github.com/HUB-Ocean-Data/odp_classroom/blob/
 **Module 2**
 
 Further Resources
+
 *R Packages*
-* RColorBrewer
-* sf
-* 
+* [sf](https://r-spatial.github.io/sf/) -- powerful geospatial functions ([cheatsheet](https://rstudio.github.io/cheatsheets/sf.pdf))
+* [tidyverse](https://tidyverse.org/packages/) -- suite of packages, including [dplyr](https://dplyr.tidyverse.org) ([cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf)), [ggplot2](https://ggplot2.tidyverse.org) ([cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf)), [readr](https://readr.tidyverse.org) ([cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf)), [stringr](https://stringr.tidyverse.org) ([cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf)), 
+* [mapview](https://r-spatial.github.io/mapview/index.html)-- interactive mapping
+* [h3](https://crazycapivara.github.io/h3-r/index.html) -- ability to create and use H3 grids
+* [rnaturalearth](https://docs.ropensci.org/rnaturalearth/articles/rnaturalearth.html) -- pull data from [Natural Earth](https://www.naturalearthdata.com), a collated standardized data catalogue 
+* [pangaear](https://docs.ropensci.org/pangaear/index.html) -- pull data from [Pangaea](https://www.pangaea.de) 
+* [arcpullr](https://pfrater.github.io/arcpullr/index.html) -- pull data from ArcGIS REST APIs
+* [rmapshaper](https://andyteucher.ca/rmapshaper/index.html) -- useful spatial package that has some more familiar tools to those who use ArcGIS and QGIS; built on [mapshaper](https://mapshaper.org), which a helpful resource on converting and working with a range of spatial data formats
+* RColorBrewer -- 
+*Sites*
+* [Pangaea](https://www.pangaea.de): location for researchers to share and dessiminate their data
