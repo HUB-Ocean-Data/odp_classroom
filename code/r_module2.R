@@ -33,6 +33,8 @@ pacman::p_load(arcpullr,
 ############################
 ############################
 
+#### 0. build ODP function
+
 # function
 ## will make data be on ODP
 odp_function <- function(odp_ready_data, uuid){
@@ -73,6 +75,8 @@ odp_function <- function(odp_ready_data, uuid){
 ############################
 ############################
 
+#### 1. obtain data
+
 # ODP
 ## connect to client
 # set up ODP API
@@ -85,18 +89,33 @@ client <- odp::odp_client(api_key = odp_api_key)
 
 ## load in dataset (see https://app.hubocean.earth/)
 gustav_polygon <- client$dataset("4172129e-ed91-48ea-a4d6-6d838ff87626")$table$select()$all_dataframe() %>%
+  # return first two rows
   dplyr::slice(1:2) %>%
-  dplyr::filter(stringr::str_detect(pattern = "POLYGON", geometry)) %>%
+  # detect and return observations that have the POLYGON pattern in the geometry field
+  dplyr::filter(stringr::str_detect(pattern = "POLYGON",
+                                    # in this field
+                                    geometry)) %>%
+  # set as sf column
   sf::st_as_sfc(x = .$geometry,
+                # set the coordinate reference system to be WGS84 (epsg.io/4326)
                 crs = 4326) %>%
+  # convert to sf and set geometry
   sf::st_sf(geometry = .)
 
+# inspect data
+## class (sf, data.frame)
 class(gustav_polygon)
+## structure
 str(gustav_polygon)
+## data values
 dplyr::glimpse(gustav_polygon)
+## field names
 names(gustav_polygon)
 
 ############################
+############################
+
+#### 2. build study area boundary box
 
 # build study area
 ## Western Indian Ocean
@@ -114,14 +133,21 @@ wio_points <- rbind(c("point", wio_e, wio_s), # southeastern point
   as.data.frame() %>%
   # rename column names
   dplyr::rename("point" = "V1",
+                # longitude
                 "lon" = "V2",
+                # latitude
                 "lat" = "V3") %>%
-  # convert to simple feature
+  # convert to simple feature -- using the longitude and latitude fields
   sf::st_as_sf(coords = c("lon", "lat"),
                # set the coordinate reference system to WGS84
                crs = "EPSG:4326")
 
+############################
+
+## interactive map viewer of the points
 mapview::mapView(wio_points)
+
+############################
 
 # create polygon
 wio_bbox <- wio_points %>%
@@ -140,7 +166,7 @@ mapview::mapView(wio_bbox)
 
 ############################
 
-# Mauritius points
+## Mauritius points
 mus_e <- 58.5
 mus_w <- 56.5
 mus_n <- -19.25
@@ -155,14 +181,21 @@ mus_points <- rbind(c("point", mus_e, mus_s), # southeastern point
   as.data.frame() %>%
   # rename column names
   dplyr::rename("point" = "V1",
+                # longitude
                 "lon" = "V2",
+                # latitude
                 "lat" = "V3") %>%
   # convert to simple feature
   sf::st_as_sf(coords = c("lon", "lat"),
                # set the coordinate reference system to WGS84
                crs = "EPSG:4326")
 
+############################
+
+# interactive view of Mauritius boundary box points
 mapview::mapView(mus_points)
+
+############################
 
 # create polygon
 mus_bbox <- mus_points %>%
@@ -177,13 +210,15 @@ mus_bbox <- mus_points %>%
   # convert back to sf
   sf::st_as_sf()
 
-## check units for determining cellsize of grid (units will be in meters)
+## check units for determining cellsize of grid (units will be in degrees)
 sf::st_crs(mus_bbox, parameters = TRUE)$units_gdal
 
 mapview::mapView(mus_bbox)
 
 ############################
 ############################
+
+#### 3. obtain Mauritius coral data from RCMRD
 
 ## set the download path directory (should still be within your working directory)
 ## you might have to change this path directory for your computer
@@ -203,10 +238,17 @@ coral <- arcpullr::get_spatial_layer("https://services6.arcgis.com/zOnyumh63cMmL
   janitor::clean_names()
 
 mapview::mapview(coral)
+
+# check structure
 str(coral)
 
+############################
+############################
+
+#### 4. obtain coral reef data from Dawson et al. (2025)
+
 ## reef data (https://doi.pangaea.de/10.1594/PANGAEA.986811)
-### navigate to data from 
+### navigate to data from Pangaea using the Pangaea R package (https://github.com/ropensci/pangaear)
 table <- pangaear::pg_data(doi="10.1594/PANGAEA.986811")
 
 ### inspect the metadata
@@ -217,7 +259,7 @@ prefix <- "https://download.pangaea.de/dataset/986811/files/"
 
 ### get files needed (a CSV of points, and shapefile)
 files <- table[[1]]$data %>%
-  # filter for files that fit files that we want
+  # filter for files that fit files that we want (i.e., shapefiles and CSV)
   dplyr::filter(grepl(pattern = "Shapefiles|CSV",
                       # within the "Binary" column
                       x = .$Binary,
@@ -249,7 +291,12 @@ fs::dir_ls(path = "data/Shapefiles",
            # only inspect files that end with ".shp"
            glob = "*.shp")
 
-### read data
+############################
+############################
+
+#### 5. load in Dawson et al. (2025) coral data
+
+# reef points 
 reef_points <- readr::read_csv(file = "data/GRID.csv") %>%
   # clean the field names
   janitor::clean_names() %>%
@@ -258,7 +305,7 @@ reef_points <- readr::read_csv(file = "data/GRID.csv") %>%
                # set the coordinate reference system to WGS84
                crs = "EPSG:4326")
 
-### load coral data
+# reef polygons
 reef_polygons <- sf::st_read(dsn = "data/Shapefiles/GRID_polygons84.shp") %>%
   # clean field names
   janitor::clean_names() %>%
@@ -268,6 +315,8 @@ reef_polygons <- sf::st_read(dsn = "data/Shapefiles/GRID_polygons84.shp") %>%
 ############################
 ############################
 
+#### 6. limiting data to study areas
+
 # limit data to study regions
 ## Western Indian Ocean
 reef_wio <- reef_polygons %>%
@@ -276,6 +325,7 @@ reef_wio <- reef_polygons %>%
                       # Western Indian Ocean boundary box
                       clip = wio_bbox)
 
+# map data interactively
 wio_map <- mapview::mapView(reef_wio,
                             # outline color
                             color = "coral",
@@ -301,6 +351,8 @@ wio_bbox_map <- wio_map@map %>%
                    zoom = 6)
 wio_bbox_map
 
+############################
+
 ## Mauritius
 coral_mus <- coral %>%
   rmapshaper::ms_clip(target = .,
@@ -315,6 +367,7 @@ mus_map <- mapview::mapView(coral_mus,
   mapview::mapView(coral,
                    col.regions = "#F0B778")
 
+# map zoomed into focused area
 mus_bbox_map <- mus_map@map %>%
   # center on the boundary box
   leaflet::setView(lng = (mus_e - (mus_e - mus_w) / 2),
@@ -325,6 +378,9 @@ mus_bbox_map <- mus_map@map %>%
 mus_bbox_map
 
 ############################
+############################
+
+#### 7. Gustav's area
 
 # Gustav's area of interest
 mapview::mapView(gustav_polygon,
@@ -333,17 +389,24 @@ mapview::mapView(gustav_polygon,
                  # fill
                  col.regions = "#e1dbdf")
 
+# Dawson et al. (2025) in Gustav's area of interest
 gustav_reef <- reef_polygons %>%
   # clip data to polygon
   rmapshaper::ms_clip(target = .,
                       # clip polygon
                       clip = gustav_polygon)
 
+# Mauritius data in Gustav's area of interest
 gustav_coral <- coral %>%
   # clip data to polygon
   rmapshaper::ms_clip(target = .,
                       # clip polygon
                       clip = gustav_polygon)
+
+############################
+############################
+
+#### 8. viewing data interactively
 
 gustav_map <- mapview::mapView(gustav_reef,
                                # outline color
@@ -371,6 +434,8 @@ gustav_map
 ############################
 ############################
 
+#### 8. ODP data preparation
+
 ## prepare the data for ODP
 reef_wio_odp <- reef_wio %>%
   # change geometry to appropriate format (string)
@@ -385,9 +450,10 @@ gustav_coral_odp <- gustav_coral %>%
   dplyr::mutate(geometry = sf::st_as_text(geometry))
 
 ############################
+############################
 
-# ODP
-## load in datasets (see https://app.hubocean.earth/)
+#### 9. export data to ODP
+
 ### GRID points (Dawson et al. 2025)
 reef_points_odp <- reef_points %>%
   # need to prepare data for ODP (dates are as POSIXct, but ODP needs them as character)
@@ -424,12 +490,15 @@ odp_gustav_coral <- odp_function(odp_ready_data = gustav_coral_odp,
 ############################
 ############################
 
+#### 10. aggregate data into H3 hexes (https://h3geo.org)
+
 # make data as a table for aggregation
 agg_table <- client$dataset("f9c2c585-4218-47ac-9b20-c73f23ace29d")$table
 
 # aggregate based on a H3 level (only works for ODP hosted data)
 agg <- agg_table$aggregate(
   # group at h3 level (can be anywhere between 1 and 15)
+  ## for further information about H3 hex resolutions: https://h3geo.org/docs/core-library/restable
   group_by = "h3(geometry, 6)",
   # aggregate based on a field (e.g., geometry) and a summary function (e.g., count, sum, max, min, avg)
   aggr = list(geometry = "count")) %>%
@@ -439,13 +508,16 @@ agg <- agg_table$aggregate(
 # check names
 names(agg)
 
+############################
+
 # get H3 indexes
 h3_indexes <- as.character(agg$group)
 
-# create a sf (simple feature) of the data
+# create a sf (simple feature) of the data using the H3 index value
 h3_sf <- h3_indexes %>%
+  # convert to sf using H3 indexes
   h3::h3_to_geo_boundary_sf() %>%
-  sf::st_as_sf() %>%
+  # change the field name of the group to be "h3_index"
   dplyr::rename("group" = "h3_index") %>%
   # join the two tables (x = H3 index dataset, y = counted table)
   # left join will add the y fields to the x field dataframe
