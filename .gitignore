@@ -10,6 +10,5 @@ data/glodap_500-2000m.geojson
 data/glodap_500-2000m.rds
 
 # videos
-videos/.DS_Store
 videos/module1/r_module1_segment11.mov
 videos/module2/r_module2.mov
