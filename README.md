@@ -37,9 +37,12 @@ to visualize marine protected areas and their [IUCN protection categories](https
   
 View module 1 video [here](https://github.com/HUB-Ocean-Data/odp_classroom/blob/main/videos/module1/r_module1.mov)
 
-**Module 2**
+**Module 2:** Building upon Module 1, this module will let you interact with pulling and exporting data to ODP. Additionally,
+you will start to use geospatial packages (sf and rmapshaper) to conduct data manipulations for visualizing coral reef data in
+the Western Indian Ocean. For these data, you will learn how to leverage ODP, its server, and the R SDK to aggregate data by an
+[H3 hex grid](https://h3geo.org).
 
-Module 2 relied on two datasets hosted elsewhere from ODP. The first are [Mauritius coral data](https://rcoe-geoportal.rcmrd.org/search?collection=dataset&layout=grid&sort=Date%20Updated%7Cmodified%7Cdesc&tags=seascape) from the [Regional Center
+Module 2 relied on two datasets hosted elsewhere from ODP. The first data are [Mauritius coral data](https://rcoe-geoportal.rcmrd.org/search?collection=dataset&layout=grid&sort=Date%20Updated%7Cmodified%7Cdesc&tags=seascape) from the [Regional Center
 of Excellence for Biodiversity, Forests & Seascapes for Eastern and Southern Africa](https://rcoe-geoportal.rcmrd.org) (RCoE-ESA). Its [geoportal](https://rcoe-geoportal.rcmrd.org/search?collection=dataset) hosts [data
 on seascapes](https://rcoe-geoportal.rcmrd.org/search?collection=dataset&layout=grid&sort=Date%20Updated%7Cmodified%7Cdesc&tags=seascape) for the region through an ArcGIS REST API.
 
@@ -61,7 +64,8 @@ Additional data for the region were hosted on Pangaea by [Dawson et al. (2025)](
 **Further Resources**
 
 *Ocean Data Platform*
-* [R SDK guide](https://docs.hubocean.earth/reference/sdk/)
+* [ODP R SDK GitHub](https://github.com/C4IROcean/odp-sdkr)
+* [ODP R SDK guide](https://docs.hubocean.earth/reference/sdk/)
 * [GLODAP v2](https://app.hubocean.earth/catalog/dataset/aea06582-fc49-4995-a9a8-2f31fcc65424/global-ocean-data-analysis-project-glodap-data)
 * [Protected Seas: Focused Area-Based Protections](https://app.hubocean.earth/catalog/dataset/a608f54b-75c7-4df9-a3a8-cedbfa391873/protectedseas-navigator-v2-focused-area-based-protections)
 * [ODP Classroom data collection](https://app.hubocean.earth/data_collections/cf8af38f-ec1d-4c84-87af-53a0a0e10880/odp-classroom)
