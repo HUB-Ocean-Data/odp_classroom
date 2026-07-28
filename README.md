@@ -64,8 +64,8 @@ Additional data for the region were hosted on Pangaea by [Dawson et al. (2025)](
 **Further Resources**
 
 *Videos*
-* View module 1 video [here](https://github.com/HUB-Ocean-Data/odp_classroom/blob/main/videos/module1/r_module1.mov) (13:43 minutes)
-* View module 2 video [here](https://github.com/HUB-Ocean-Data/odp_classroom/tree/main/videos/module2)
+* View module 1 video [here](https://github.com/HUB-Ocean-Data/odp_classroom/blob/main/videos/module1/r_module1.mov) (13 minutes 43 seconds)
+* View module 2 video [here](https://github.com/HUB-Ocean-Data/odp_classroom/tree/main/videos/module2) (17 minutes 09 seconds)
 * Module 1 segment videos are within the [Module 1 videos sub-directory](https://github.com/HUB-Ocean-Data/odp_classroom/tree/main/videos/module1). All of the videos are there except for segment 11
 
 *Ocean Data Platform*
