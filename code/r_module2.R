@@ -75,7 +75,7 @@ odp_function <- function(odp_ready_data, uuid){
 ############################
 ############################
 
-#### 1. obtain data
+#### 1. connect to ODP and obtain data
 
 # ODP
 ## connect to client
@@ -434,7 +434,7 @@ gustav_map
 ############################
 ############################
 
-#### 8. ODP data preparation
+#### 9. ODP data preparation
 
 ## prepare the data for ODP
 reef_wio_odp <- reef_wio %>%
@@ -452,7 +452,7 @@ gustav_coral_odp <- gustav_coral %>%
 ############################
 ############################
 
-#### 9. export data to ODP
+#### 10. export data to ODP
 
 ### GRID points (Dawson et al. 2025)
 reef_points_odp <- reef_points %>%
@@ -490,7 +490,7 @@ odp_gustav_coral <- odp_function(odp_ready_data = gustav_coral_odp,
 ############################
 ############################
 
-#### 10. aggregate data into H3 hexes (https://h3geo.org)
+#### 11. aggregate data into H3 hexes (https://h3geo.org)
 
 # make data as a table for aggregation
 agg_table <- client$dataset("f9c2c585-4218-47ac-9b20-c73f23ace29d")$table
