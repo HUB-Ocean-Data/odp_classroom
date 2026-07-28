@@ -62,6 +62,9 @@ Additional data for the region were hosted on Pangaea by [Dawson et al. (2025)](
 
 *Ocean Data Platform*
 * [R SDK guide](https://docs.hubocean.earth/reference/sdk/)
+* [GLODAP v2](https://app.hubocean.earth/catalog/dataset/aea06582-fc49-4995-a9a8-2f31fcc65424/global-ocean-data-analysis-project-glodap-data)
+* [Protected Seas: Focused Area-Based Protections](https://app.hubocean.earth/catalog/dataset/a608f54b-75c7-4df9-a3a8-cedbfa391873/protectedseas-navigator-v2-focused-area-based-protections)
+* [ODP Classroom data collection](https://app.hubocean.earth/data_collections/cf8af38f-ec1d-4c84-87af-53a0a0e10880/odp-classroom)
 
 *R Packages*
 * [sf](https://r-spatial.github.io/sf/) -- powerful geospatial functions ([cheatsheet](https://rstudio.github.io/cheatsheets/sf.pdf))
