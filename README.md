@@ -60,6 +60,9 @@ Additional data for the region were hosted on Pangaea by [Dawson et al. (2025)](
 
 **Further Resources**
 
+*Ocean Data Platform*
+* [R SDK guide](https://docs.hubocean.earth/reference/sdk/)
+
 *R Packages*
 * [sf](https://r-spatial.github.io/sf/) -- powerful geospatial functions ([cheatsheet](https://rstudio.github.io/cheatsheets/sf.pdf))
 * [tidyverse](https://tidyverse.org/packages/) -- suite of packages, including [dplyr](https://dplyr.tidyverse.org) ([cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf)), [ggplot2](https://ggplot2.tidyverse.org) ([cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf)), [readr](https://readr.tidyverse.org) ([cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf)), [stringr](https://stringr.tidyverse.org) ([cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf)), 
