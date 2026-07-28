@@ -39,7 +39,26 @@ View module 1 video [here](https://github.com/HUB-Ocean-Data/odp_classroom/blob/
 
 **Module 2**
 
-Further Resources
+Module 2 relied on two datasets hosted elsewhere from ODP. The first are [Mauritius coral data](https://rcoe-geoportal.rcmrd.org/search?collection=dataset&layout=grid&sort=Date%20Updated%7Cmodified%7Cdesc&tags=seascape) from the [Regional Center
+of Excellence for Biodiversity, Forests & Seascapes for Eastern and Southern Africa](https://rcoe-geoportal.rcmrd.org) (RCoE-ESA). Its [geoportal](https://rcoe-geoportal.rcmrd.org/search?collection=dataset) hosts [data
+on seascapes](https://rcoe-geoportal.rcmrd.org/search?collection=dataset&layout=grid&sort=Date%20Updated%7Cmodified%7Cdesc&tags=seascape) for the region through an ArcGIS REST API.
+
+Additional data for the region were hosted on Pangaea by [Dawson et al. (2025)](https://doi.pangaea.de/10.1594/PANGAEA.986811). This database on global reef islands contained low-lying reef boundaries and points.
+
+  - Section 0:  Create function (ODP exporting)
+  - Section 1:  Connect to ODP
+  - Section 2:  Build boundary box
+  - Section 3:  Obtain data from ArcGIS REST API
+  - Section 4:  Obtain data from Pangaea
+  - Section 5:  Load data from Pangaea
+  - Section 6:  Clip data to regional boundary box
+  - Section 7:  Clip data to area of interest boundary box
+  - Section 8:  Interactive mapping
+  - Section 9:  ODP data preparation
+  - Section 10: Export data to ODP
+  - Section 11: Aggregate on H3 hexagons
+
+**Further Resources**
 
 *R Packages*
 * [sf](https://r-spatial.github.io/sf/) -- powerful geospatial functions ([cheatsheet](https://rstudio.github.io/cheatsheets/sf.pdf))
@@ -50,6 +69,7 @@ Further Resources
 * [pangaear](https://docs.ropensci.org/pangaear/index.html) -- pull data from [Pangaea](https://www.pangaea.de) 
 * [arcpullr](https://pfrater.github.io/arcpullr/index.html) -- pull data from ArcGIS REST APIs
 * [rmapshaper](https://andyteucher.ca/rmapshaper/index.html) -- useful spatial package that has some more familiar tools to those who use ArcGIS and QGIS; built on [mapshaper](https://mapshaper.org), which a helpful resource on converting and working with a range of spatial data formats
-* RColorBrewer -- 
+* [RColorBrewer](https://cran.r-project.org/web/packages/RColorBrewer/RColorBrewer.pdf) -- package that provides templates designed by Cynthia Brewer at PSU ([website](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3)); NCEAS's [cheatsheet](https://www.nceas.ucsb.edu/sites/default/files/2020-04/colorPaletteCheatsheet.pdf) and a different [guide](https://r-graph-gallery.com/38-rcolorbrewers-palettes.html) on color palettes
+
 *Sites*
-* [Pangaea](https://www.pangaea.de): location for researchers to share and dessiminate their data
+* [Pangaea](https://www.pangaea.de) -- location for researchers to share and dessiminate their data
