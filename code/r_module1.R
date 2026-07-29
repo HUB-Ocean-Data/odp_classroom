@@ -103,6 +103,7 @@ client$dataset(data_uuid)$table$stats()$columns[[11]]
 # calculate start time of code (determine how long it takes to complete all code)
 load_start <- Sys.time()
 
+# ingest data from ODP
 data <- client$dataset(data_uuid)$table$select(filter = "G2bottomdepth >= ? AND G2bottomdepth <= ?",
                                                # set the variables to be the minimum and maximum values (depth) for the field
                                                vars = list(500, 2000))$all_dataframe(max_rows = 10000000000000000000, # maximum number of rows to grab before timing out
@@ -158,7 +159,9 @@ class(data_sf)
 
 # build interactive map
 mapview::mapview(x = data_sf,
+                 # color for legend
                  zcol = "g2bottomdepth",
+                 # layer name for legend
                  layer.name = "Depth (m)")
 
 ############################
@@ -169,7 +172,7 @@ mapview::mapview(x = data_sf,
 # global data (from Natural Earth: https://www.naturalearthdata.com)
 ## world country boundries
 world <- rnaturalearth::ne_countries(scale = "large",
-                                     # return country boudaries
+                                     # return country boundaries
                                      type = "countries",
                                      # class should be sf
                                      returnclass = "sf")
